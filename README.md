@@ -18,7 +18,7 @@ O que você precisa instalar para rodar o projeto?
  * sudo sh docker-compose-dev.sh 
 * sh docker-compose-dev.sh 
  ```
-### Como rodar os teste?
+### Como rodar os testes?
 ```
 ./gradlew clean test 
 ```
