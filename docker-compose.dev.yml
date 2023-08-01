@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  server:
+    entrypoint: ["sh", "-c", "java -cp app:app/lib/* com.demo.management.ManagementApplication"]
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb-management:27017/managementApi?retryWrites=true&w=majority
+
+    depends_on:
+      - db
+
+  db:
+      image: 'mongo'
+      container_name: mongodb-management
+      ports:
+        - '27017:27017'
+      volumes:
+        - ./data/db:/data/db

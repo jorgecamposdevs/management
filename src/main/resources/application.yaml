@@ -1,0 +1,19 @@
+swagger:
+  contact:
+    name: Jorge Campos
+    email: "jorgecamposdevs@gmail.com"
+  app:
+    name: Management Api
+    version: 0.1.10
+    description: Este é um sistema de gestão de funcionários desenvolvido em Java que permite a administração de informações dos colaboradores de uma empresa. O objetivo é facilitar o gerenciamento dos dados dos funcionários de forma eficiente e organizada.
+  base:
+    package: com.demo.management
+
+spring:
+  data:
+    mongodb:
+      uri: ${SPRING_DATA_MONGODB_URI}
+
+
+
+
