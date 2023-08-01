@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Slf4j
 public class EmployeeServiceImpl implements EmployeeService {
@@ -44,5 +46,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteById(String id) {
         log.info("delete existing employees {}", id);
         employeeRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<EmployeeEntity> findByName(String name) {
+        log.info("get employee by name {}", name);
+        return employeeRepository.findByName(name);
     }
 }

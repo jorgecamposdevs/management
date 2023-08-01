@@ -3,11 +3,15 @@ package com.demo.management.facades.impl;
 import com.demo.management.dtos.requests.EmployeeRequestDTO;
 import com.demo.management.dtos.responses.EmployeeResponseDTO;
 import com.demo.management.entities.EmployeeEntity;
+import com.demo.management.exceptions.EmployeeExceptions;
+import com.demo.management.exceptions.enums.EmployeeEnum;
 import com.demo.management.facades.EmployeeFacade;
 import com.demo.management.services.EmployeeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class EmployeeFacadeImpl implements EmployeeFacade {
@@ -20,7 +24,14 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
 
     @Override
     public EmployeeResponseDTO create(EmployeeRequestDTO employeeRequestDTO) {
-        return toDto(employeeService.create(toEntity(employeeRequestDTO)));
+
+        Optional<EmployeeEntity> name = employeeService.findByName(employeeRequestDTO.getName());
+
+        if (name.isPresent()) {
+            throw new EmployeeExceptions(EmployeeEnum.EMPLOYEE_ALREADY_EXIST);
+        } else {
+            return toDto(employeeService.create(toEntity(employeeRequestDTO)));
+        }
     }
 
     @Override
