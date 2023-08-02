@@ -1,7 +1,11 @@
 package com.demo.management.dtos.responses;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class EmployeeResponseDTO {
 

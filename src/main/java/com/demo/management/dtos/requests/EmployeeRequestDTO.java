@@ -1,12 +1,15 @@
 package com.demo.management.dtos.requests;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class EmployeeRequestDTO {
 
