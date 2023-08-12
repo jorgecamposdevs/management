@@ -2,6 +2,7 @@ package com.demo.management.services;
 
 import com.demo.management.entities.EmployeeEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface EmployeeService {
@@ -11,4 +12,5 @@ public interface EmployeeService {
     EmployeeEntity update(EmployeeEntity employeeEntity, String id);
     void deleteById(String id);
     Optional<EmployeeEntity> findByName(String name);
+    List<EmployeeEntity> findAll();
 }
