@@ -24,14 +24,8 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
 
     @Override
     public EmployeeResponseDTO create(EmployeeRequestDTO employeeRequestDTO) {
-
-        Optional<EmployeeEntity> name = employeeService.findByName(employeeRequestDTO.getName());
-
-        if (name.isPresent()) {
-            throw new EmployeeExceptions(EmployeeEnum.EMPLOYEE_ALREADY_EXIST);
-        } else {
-            return toDto(employeeService.create(toEntity(employeeRequestDTO)));
-        }
+        checkIfNameExists(employeeRequestDTO.getName());
+        return toDto(employeeService.create(toEntity(employeeRequestDTO)));
     }
 
     @Override
@@ -56,5 +50,13 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
 
     public EmployeeEntity toEntity(EmployeeRequestDTO employeeRequestDTO) {
         return modelMapper.map(employeeRequestDTO, EmployeeEntity.class);
+    }
+
+    private void checkIfNameExists(String name) {
+        Optional<EmployeeEntity> optional = employeeService.findByName(name);
+
+        if (optional.isPresent()) {
+            throw new EmployeeExceptions(EmployeeEnum.EMPLOYEE_ALREADY_EXIST);
+        }
     }
 }
