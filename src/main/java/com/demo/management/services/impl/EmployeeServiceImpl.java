@@ -46,6 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void deleteById(String id) {
         log.info("delete existing employees {}", id);
+        findById(id);
         employeeRepository.deleteById(id);
     }
 

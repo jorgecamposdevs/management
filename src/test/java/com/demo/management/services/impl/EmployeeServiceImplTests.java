@@ -36,9 +36,6 @@ public class EmployeeServiceImplTests {
     private EmployeeEntity employeeEntity;
 
     private Optional<EmployeeEntity> optionalEmployeeEntity;
-
-    private List<EmployeeEntity> employeeEntityList;
-
     private static final String ID = "1234567890";
     private static final String NAME = "Jorge";
     private static final String JOB = "developer";
@@ -56,23 +53,33 @@ public class EmployeeServiceImplTests {
     }
 
     @Test
-    public void createSuccessReturnOk() throws Exception {
+    public void whenCreateThenSuccessReturnOk() throws Exception {
         when(employeeRepository.save(employeeEntity)).thenReturn(employeeEntity);
         EmployeeEntity resultTests = employeeService.create(employeeEntity);
         assertNotNull(resultTests);
         assertEquals(EmployeeEntity.class, resultTests.getClass());
+        assertEquals(ID, resultTests.getId());
+        assertEquals(NAME, resultTests.getName());
+        assertEquals(JOB, resultTests.getJob());
+        assertEquals(PHONE, resultTests.getPhone());
+        assertEquals(ADDRESS, resultTests.getAddress());
     }
 
     @Test
-    public void findByIdSuccessReturnOk() throws Exception {
+    public void whenFindByIdThenSuccessReturnOk() throws Exception {
         when(employeeRepository.findById(ID)).thenReturn(Optional.of(employeeEntity));
         EmployeeEntity resultTests = employeeService.findById(ID);
         assertNotNull(resultTests);
         assertEquals(EmployeeEntity.class, resultTests.getClass());
+        assertEquals(ID, resultTests.getId());
+        assertEquals(NAME, resultTests.getName());
+        assertEquals(JOB, resultTests.getJob());
+        assertEquals(PHONE, resultTests.getPhone());
+        assertEquals(ADDRESS, resultTests.getAddress());
     }
 
     @Test
-    public void findByIdObjectNotFoundException() throws Exception {
+    public void whenFindByIdThenObjectNotFoundException() throws Exception {
         when(employeeRepository.findById(anyString())).thenThrow(new EmployeeExceptions(EmployeeEnum.EMPLOYEE_NOT_FOUND));
 
         try {
@@ -84,26 +91,43 @@ public class EmployeeServiceImplTests {
     }
 
     @Test
-    public void updateByIdSuccessReturnOk() throws Exception {
+    public void whenUpdateByIdThenSuccessReturnOk() throws Exception {
         when(employeeRepository.save(employeeEntity)).thenReturn(employeeEntity);
         EmployeeEntity resultTests = employeeService.update(employeeEntity, ID);
         employeeEntity.setId(ID);
         assertNotNull(resultTests);
         assertEquals(EmployeeEntity.class, resultTests.getClass());
+        assertEquals(ID, resultTests.getId());
+        assertEquals(NAME, resultTests.getName());
+        assertEquals(JOB, resultTests.getJob());
+        assertEquals(PHONE, resultTests.getPhone());
+        assertEquals(ADDRESS, resultTests.getAddress());
     }
 
     @Test
-    public void deleteByIdSuccessReturnOk() throws Exception {
+    public void whenDeleteByIdThenSuccessReturnOk() throws Exception {
         doNothing().when(employeeRepository).deleteById(Mockito.anyString());
         employeeService.deleteById(ID);
-        verify(employeeRepository, Mockito.times(1)).deleteById(Mockito.anyString());
+        verify(employeeRepository, times(1)).deleteById(anyString());
     }
 
     @Test
-    public void findByNameSuccessReturnOk() {
+    public void whenDeleteByIdObjectNotFoundException() throws Exception {
+        when(employeeRepository.findById(anyString())).thenThrow(new EmployeeExceptions(EmployeeEnum.EMPLOYEE_NOT_FOUND));
+
+        try {
+            employeeService.deleteById(ID);
+        } catch (Exception e) {
+            assertEquals(EmployeeExceptions.class, e.getClass());
+            assertEquals("employee not found", e.getMessage());
+        }
+    }
+
+    @Test
+    public void whenFindByNameThenSuccessReturnOk() {
         when(employeeRepository.findByName(NAME)).thenReturn(optionalEmployeeEntity);
         Optional<EmployeeEntity> optional = employeeService.findByName(NAME);
-        verify(employeeRepository, Mockito.times(1)).findByName(NAME);
+        verify(employeeRepository,times(1)).findByName(NAME);
         assertTrue(optional.isPresent());
         assertEquals(NAME, optional.get().getName());
     }
