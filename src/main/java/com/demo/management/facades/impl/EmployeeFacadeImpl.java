@@ -11,6 +11,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -36,6 +38,13 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
     @Override
     public EmployeeResponseDTO update(EmployeeRequestDTO employeeRequestDTO, String id) {
         return toDto(employeeService.update(toEntity(employeeRequestDTO), id));
+    }
+
+    @Override
+    public List<EmployeeResponseDTO> findAll() {
+        List<EmployeeResponseDTO> list = new ArrayList<>();
+        employeeService.findAll().forEach(employeeEntity -> list.add(toDto(employeeEntity)));
+        return list;
     }
 
     @Override

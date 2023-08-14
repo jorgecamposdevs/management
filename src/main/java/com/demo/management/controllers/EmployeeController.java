@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/employees")
@@ -61,5 +62,15 @@ public class EmployeeController {
     public ResponseEntity<EmployeeResponseDTO> deleteById(@PathVariable String id) {
         employeeFacade.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @Operation(summary = "findAll employees")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "findAll employees successfully"),
+            @ApiResponse(responseCode = "404", description = "employee not found")
+    })
+    @GetMapping
+    public ResponseEntity<List<EmployeeResponseDTO>> findAll() {
+        return new ResponseEntity<>(employeeFacade.findAll(), HttpStatus.OK);
     }
 }

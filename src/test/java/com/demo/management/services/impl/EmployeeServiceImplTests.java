@@ -1,5 +1,7 @@
 package com.demo.management.services.impl;
 
+import com.demo.management.dtos.requests.EmployeeRequestDTO;
+import com.demo.management.dtos.responses.EmployeeResponseDTO;
 import com.demo.management.entities.EmployeeEntity;
 import com.demo.management.exceptions.EmployeeExceptions;
 import com.demo.management.exceptions.enums.EmployeeEnum;
@@ -9,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -105,8 +106,8 @@ public class EmployeeServiceImplTests {
     }
 
     @Test
-    public void whenDeleteByIdThenSuccessReturnOk() throws Exception {
-        doNothing().when(employeeRepository).deleteById(Mockito.anyString());
+    public void whenDeleteByIdThenSuccessReturnOk()  {
+        doNothing().when(employeeRepository).deleteById(anyString());
         employeeService.deleteById(ID);
         verify(employeeRepository, times(1)).deleteById(anyString());
     }

@@ -28,12 +28,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeEntity findById(String id) {
         log.info("get details of existing employees {}", id);
-        EmployeeEntity employeeEntity =  employeeRepository.findById(id).orElse(new EmployeeEntity());
-
-        if (employeeEntity.getId() == null) {
-            throw new EmployeeExceptions(EmployeeEnum.EMPLOYEE_NOT_FOUND);
-        }
-        return employeeEntity;
+        return employeeRepository.findById(id).orElseThrow(() -> new EmployeeExceptions(EmployeeEnum.EMPLOYEE_NOT_FOUND));
     }
 
     @Override
@@ -46,7 +41,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void deleteById(String id) {
         log.info("delete existing employees {}", id);
-        findById(id);
         employeeRepository.deleteById(id);
     }
 
@@ -58,6 +52,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeEntity> findAll() {
+        log.info("getting employees");
         return employeeRepository.findAll();
     }
 }
